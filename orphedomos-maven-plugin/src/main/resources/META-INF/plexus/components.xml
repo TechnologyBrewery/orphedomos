@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<component-set>
+	<components>
+		<component>
+			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+			<role-hint>orphedomos</role-hint>
+			<implementation>
+				org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			</implementation>
+			<configuration>
+				<lifecycles>
+					<lifecycle>
+						<id>default</id>
+						<phases>
+							<validate>
+								org.technologybrewery.orphedomos:orphedomos-maven-plugin:verify-docker-environment
+							</validate>
+							<package>
+								org.technologybrewery.orphedomos:orphedomos-maven-plugin:build-docker-image
+							</package>
+							<deploy>
+								org.technologybrewery.orphedomos:orphedomos-maven-plugin:push-docker-image
+							</deploy>
+						</phases>
+					</lifecycle>
+				</lifecycles>
+			</configuration>
+		</component>
+	</components>
+</component-set>
