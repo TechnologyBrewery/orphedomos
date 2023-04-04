@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.technologybrewery</groupId>
+        <artifactId>parent</artifactId>
+        <version>1</version>
+    </parent>
+
+    <groupId>org.technologybrewery.orphedomos</groupId>
+    <artifactId>orphedomos-parent</artifactId>
+    <version>0.5.8-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Orphedomos::Parent</name>
+    <description>
+        Orphedomos is a plugin for orchestration and execution of docker builds as part of a maven build process. Named
+        for Orpheus, a great composer from Greek myth, and oikodómos, the Greek term for 'builder', Orphedomos takes the
+        process of building your project's docker images and elegantly composes it into your existing Maven workflows.
+    </description>
+    <url>https://github.com/TechnologyBrewery/orphedomos</url>
+    <inceptionYear>2023</inceptionYear>
+
+    <scm>
+        <connection>scm:git:ssh://git@github.com/TechnologyBrewery/orphedomos.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/TechnologyBrewery/orphedomos.git</developerConnection>
+        <url>scm:git:ssh://git@github.com/TechnologyBrewery/orphedomos</url>
+      <tag>HEAD</tag>
+  </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/TechnologyBrewery/orphedomos/issues</url>
+    </issueManagement>
+
+    <profiles>
+
+        <profile>
+            <id>bootstrap</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>orphedomos-maven-plugin</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>orphedomos-test</id>
+            <modules>
+                <module>orphedomos-test</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <modules>
+                <!-- Makes it easier to keep versions aligned: -->
+                <module>orphedomos-maven-plugin</module>
+                <module>orphedomos-test</module>
+            </modules>
+        </profile>
+
+    </profiles>
+</project>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>orphedomos-parent</artifactId>
+        <groupId>org.technologybrewery.orphedomos</groupId>
+        <version>0.5.8-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>orphedomos-test</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Orphedomos::Test</name>
+
+    <modules>
+        <module>orphedomos-test-baseline</module>
+        <module>orphedomos-test-no-buildkit</module>
+        <module>orphedomos-test-multimodule</module>
+    </modules>
+
+    <build>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.technologybrewery.orphedomos</groupId>
+                    <artifactId>orphedomos-maven-plugin</artifactId>
+                    <version>${project.version}</version>
+                    <configuration>
+                        <repoId>docker-hub</repoId>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.technologybrewery.orphedomos</groupId>
+                <artifactId>orphedomos-maven-plugin</artifactId>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+</project>

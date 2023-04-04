@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>orphedomos-test</artifactId>
+    <groupId>org.technologybrewery.orphedomos</groupId>
+    <version>0.5.8-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>orphedomos-test-no-buildkit</artifactId>
+  <packaging>orphedomos</packaging>
+
+  <name>Orphedomos::Test::No BuildKit</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.technologybrewery.orphedomos</groupId>
+        <artifactId>orphedomos-maven-plugin</artifactId>
+        <configuration>
+          <imageName>orphedomos/orphetest</imageName>
+          <useBuildKit>false</useBuildKit>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
