@@ -214,3 +214,8 @@ snapshot.  The resulting image name and tag will be of the form `{imageName}:{im
 *POM Option:* `<skip>`
 
 *Default:* `false`
+
+## Release Instructions
+Given the nature of releasing a Maven plugin with test modules, there is a two-step release process:
+1. Run `mvn release:clean release:prepare release:perform -U -DreleaseVersion=0.X.X -DdevelopmentVersion=0.Y.0-SNAPSHOT -DscmCommentPrefix=":bookmark: Release version X.X.X"`
+2. Run `mvn release:update-versions -U -DreleaseVersion=0.X.X -DdevelopmentVersion=0.Y.0-SNAPSHOT -DscmCommentPrefix=":bookmark: Release version X.X.X" -Porphedomos-test`
