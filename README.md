@@ -1,4 +1,4 @@
-## Ophedomos Overview
+## Orphedomos Overview
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/mit)
 [![Maven Central](https://img.shields.io/maven-central/v/org.technologybrewery.orphedomos/orphedomos-parent.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.technologybrewery.orphedomos%22%20AND%20a%3A%22orphedomos-parent%22)
 [![Status](https://img.shields.io/badge/Status-Incubating-yellow)](https://img.shields.io/badge/Status-Incubating-yellow)
@@ -50,6 +50,13 @@ that leverages Orphedomos.
   </build>
 </project>
 ``` 
+
+### Provided Goals
+
+* `verify-docker-environment`.  Default Phase: `validate`.
+* `build-docker-image`.  Default Phase: `package`.
+* `push-docker-image`.  Default Phase: `deploy`.
+* `multiplatform-build-deploy`.  Default Phase: `None`
 
 ### Command Line Utilities
 

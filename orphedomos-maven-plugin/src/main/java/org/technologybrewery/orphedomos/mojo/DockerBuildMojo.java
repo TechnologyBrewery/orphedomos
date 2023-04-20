@@ -18,6 +18,9 @@ public class DockerBuildMojo extends AbstractDockerMojo {
 
     @Override
     public void doExecute() throws MojoExecutionException, MojoFailureException {
+        if (this.repoId != null && !this.repoId.isBlank())
+            login();
+
         logger.info("Built docker image...");
         logger.info("Current directory: " + dockerContext);
 
@@ -26,6 +29,9 @@ public class DockerBuildMojo extends AbstractDockerMojo {
         } else {
             this.buildLegacy();
         }
+
+        if (this.repoId != null && !this.repoId.isBlank())
+            logout();
     }
 
     private void buildWithBuildKit() throws MojoExecutionException{
