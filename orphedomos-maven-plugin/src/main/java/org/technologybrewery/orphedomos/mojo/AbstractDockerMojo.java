@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.settings.Settings;
+import org.technologybrewery.orphedomos.util.OrphedomosException;
 import org.technologybrewery.orphedomos.util.credential.CredentialUtil;
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
 
@@ -85,11 +86,11 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-	if (skip) {
-	    getLog().info("Skipping execution of all orphedomos-maven-plugin goals as 'skip' is set to true");
-	} else {
-	    doExecute();
-	}
+        if (skip) {
+            getLog().info("Skipping execution of all orphedomos-maven-plugin goals as 'skip' is set to true");
+        } else {
+            doExecute();
+        }
     }
 
     /**
@@ -113,14 +114,24 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
         return args;
     }
 
+    private void validateLoginDefined(String username, String password) throws OrphedomosException {
+        if (username == null || password == null) {
+            throw new OrphedomosException("Missing or invalid credentials for repository id " + repoId + ".  Please validate your Maven settings.xml!");
+        }
+    }
+
     protected void login() throws MojoExecutionException {
         if (dryRun) { return; }
+        String username = CredentialUtil.findUsernameForServer(settings, repoId);
         String password = findPasswordForServer(repoId);
+
+        validateLoginDefined(username, password);
+
         DockerCommandExecutor executor = new DockerCommandExecutor(dockerContext);
         executor.executeWithSensitiveArgsAndLogOutput(Arrays.asList(
                 new ImmutablePair<>("login", false),
                 new ImmutablePair<>("--username", false),
-                new ImmutablePair<>(CredentialUtil.findUsernameForServer(settings, repoId), false),
+                new ImmutablePair<>(username, false),
                 new ImmutablePair<>("--password", false),
                 new ImmutablePair<>(password, true),
                 new ImmutablePair<>(repoUrl, false)
