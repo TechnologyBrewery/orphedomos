@@ -123,7 +123,9 @@ where the password is stored in an encrypted way, but simply provided as plain-t
 
 #### Repository ID
 
-*Description:* Server ID holding the credentials for docker login.  Must match to a server ID in your maven settings.xml file.
+*Description:* Server ID holding the credentials for docker login.  Must match to a server ID in your maven settings.xml file.  Docker login will be 
+attempted for any applicable goal for which this parameter is defined.  For instance, to login only during the `deploy`
+phase, define this parameter specifically within the `default-push-docker-image` execution's configuration.
 
 *CLI Option:* `orphedomos.repository.id`
 
@@ -138,18 +140,6 @@ where the password is stored in an encrypted way, but simply provided as plain-t
 *CLI Option:* `orphedomos.repository.url`
 
 *POM Option:* `<repoUrl>`
-
-*Default:* `""`
-
-#### Snyk Token
-
-*.m2/settings:* 	
-```xml
-<server>
-		<id>snyk</id>
-		<password>{SnykUserToken}</password>
-</server>
-```
 
 *Default:* `""`
 

@@ -26,9 +26,16 @@
                     <groupId>org.technologybrewery.orphedomos</groupId>
                     <artifactId>orphedomos-maven-plugin</artifactId>
                     <version>${project.version}</version>
-                    <configuration>
-                        <repoId>docker-hub</repoId>
-                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-push-docker-image</id>
+                            <configuration>
+<!--                            In order to test deployment, you must provide a docker login in your settings.xml.
+                                By default, we assume the name to be "docker-hub".-->
+                                <repoId>docker-hub</repoId>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
