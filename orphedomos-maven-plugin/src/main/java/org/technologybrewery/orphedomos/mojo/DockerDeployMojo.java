@@ -37,11 +37,11 @@ public class DockerDeployMojo extends AbstractDockerMojo {
                 executor.executeAndLogOutput(Arrays.asList(
                         "tag",
                         getImageTag(),
-                        prependRegistry(alias)
+                        alias
                 ));
                 executor.executeAndLogOutput(Arrays.asList(
                         "push",
-                        prependRegistry(alias)
+                        alias
                 ));
 //                executor.executeAndLogOutput(Arrays.asList(
 //                        "manifest",

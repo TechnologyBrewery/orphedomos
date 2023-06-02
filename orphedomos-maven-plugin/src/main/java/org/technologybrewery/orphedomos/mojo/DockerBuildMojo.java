@@ -30,8 +30,22 @@ public class DockerBuildMojo extends AbstractDockerMojo {
             this.buildLegacy();
         }
 
+        applyAliases();
+
         if (this.repoId != null && !this.repoId.isBlank())
             logout();
+    }
+
+    private void applyAliases() throws MojoExecutionException {
+        DockerCommandExecutor executor = new DockerCommandExecutor(dockerContext);
+
+        for (String alias : aliases) {
+            executor.executeAndLogOutput(Arrays.asList(
+                    "tag",
+                    getImageTag(),
+                    alias
+            ));
+        }
     }
 
     private void buildWithBuildKit() throws MojoExecutionException{
