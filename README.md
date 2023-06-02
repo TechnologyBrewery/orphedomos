@@ -104,7 +104,7 @@ form `{imageName}:{imageVersion}{tagSuffix}`.
 *Default:* `${project.version}`
 
 #### Aliases
-*Description:* Specifies additional tags to apply to the image once pushed to a remote repository.  These tags are currently only applied for remote deployment.
+*Description:* Specifies additional tags to apply to the image.  Occurs as a supplemental action in both `build-docker-image` and `push-docker-image` phases.
 
 *CLI Option:* `orphedomos.image.aliases`
 
