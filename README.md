@@ -70,8 +70,20 @@ simultaneously.  Due to a current buildkit limitation, this functionality is onl
 docker repository immediately.  It cannot be used to load images to your local image registry, and it demands that
 your docker credentials be configured or supplied appropriately.
 
-*Syntax*: `mvn orphedomos:multiplatform-build-deploy -Dorphedomos.build.architecture=linux/arm64,linux/amd64`
+Example Syntax: 
 
+*CLI:* 
+```
+mvn orphedomos:multiplatform-build-deploy -Dorphedomos.build.architecture=linux/arm64,linux/amd64
+```
+
+*POM:* 
+```
+<targetArchitectures>
+  <targetArchitectures>linux/arm64</targetArchitectures>
+  <targetArchitectures>linux/amd64</targetArchitectures>
+</targetArchitectures>
+```
 ### Configuration Options
 
 #### Docker Context
@@ -167,7 +179,7 @@ Specifies target architectures when using the multiplatform build CLI goal.
 
 *CLI Option:* `orphedomos.build.architecture`
 
-*POM Option:* N/A
+*POM Option:* `<targetArchitectures><targetArchitecture> </targetArchitecture></targetArchitectures>`
 
 *Default:* `[]`
 
