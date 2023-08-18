@@ -58,6 +58,16 @@ that leverages Orphedomos.
 * `push-docker-image`.  Default Phase: `deploy`.
 * `multiplatform-build-deploy`.  Default Phase: `None`
 
+### Artifacts
+
+Three artifacts will be processed as part of the `install` and `deploy` phases.
+
+* The Docker Image will be published by Orphedomos to a docker image repository.
+* The Dockerfile and POM file will be published to the Maven artifact repository, allowing for safe dependency
+specification and reactor ordering between `orphedomos`-packaged modules.  This can be configured
+through the [`maven-install-plugin`](https://maven.apache.org/plugins/maven-install-plugin/install-mojo.html) and
+[`maven-deploy-plugin`](https://maven.apache.org/plugins/maven-deploy-plugin/deploy-mojo.html).
+
 ### Command Line Utilities
 
 Orphedomos also provides auxiliary command-line executable goals which may be helpful

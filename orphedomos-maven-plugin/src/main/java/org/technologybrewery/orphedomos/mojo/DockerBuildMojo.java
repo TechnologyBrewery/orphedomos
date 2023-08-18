@@ -4,16 +4,22 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Mojo(name = "build-docker-image", defaultPhase = LifecyclePhase.PACKAGE)
 public class DockerBuildMojo extends AbstractDockerMojo {
+    @Parameter(defaultValue = "${project}", readonly = true, required = true)
+    private MavenProject project;
+
     private static final Logger logger = LoggerFactory.getLogger(DockerBuildMojo.class);
 
     @Override
@@ -34,6 +40,12 @@ public class DockerBuildMojo extends AbstractDockerMojo {
 
         if (this.repoId != null && !this.repoId.isBlank())
             logout();
+
+        attachDockerfileArtifact();
+    }
+
+    private void attachDockerfileArtifact() {
+        project.getArtifact().setFile(new File(getDockerfilePath()));
     }
 
     private void applyAliases() throws MojoExecutionException {

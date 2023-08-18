@@ -15,6 +15,7 @@
     <modules>
         <module>orphedomos-test-baseline</module>
         <module>orphedomos-test-no-buildkit</module>
+        <module>orphedomos-test-dependency</module>
         <module>orphedomos-test-multimodule</module>
     </modules>
 
