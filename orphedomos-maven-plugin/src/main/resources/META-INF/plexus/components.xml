@@ -45,8 +45,10 @@
 			</implementation>
 			<configuration>
 				<type>docker</type>
-				<extension>dockerfile</extension>
+				<extension>orphedomos.placeholder.txt</extension>
 				<packaging>orphedomos</packaging>
+				<language>dockerfile</language>
+				<addedToClasspath>false</addedToClasspath>
 			</configuration>
 		</component>
 	</components>

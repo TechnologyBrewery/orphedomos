@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +21,12 @@ import java.util.List;
 public class DockerBuildMojo extends AbstractDockerMojo {
     @Parameter(defaultValue = "${project}", readonly = true, required = true)
     private MavenProject project;
+
+    /**
+     * Location of the artifact that will be published for this module.
+     */
+    @Parameter(property = "orphedomos.mavenArtifactFile", required = true, defaultValue = "${project.basedir}/target/orphedomos.placeholder.txt")
+    protected File mavenArtifactFile;
 
     private static final Logger logger = LoggerFactory.getLogger(DockerBuildMojo.class);
 
@@ -41,11 +49,7 @@ public class DockerBuildMojo extends AbstractDockerMojo {
         if (this.repoId != null && !this.repoId.isBlank())
             logout();
 
-        attachDockerfileArtifact();
-    }
-
-    private void attachDockerfileArtifact() {
-        project.getArtifact().setFile(new File(getDockerfilePath()));
+        setUpPlaceholderFileAsMavenArtifact();
     }
 
     private void applyAliases() throws MojoExecutionException {
@@ -98,5 +102,23 @@ public class DockerBuildMojo extends AbstractDockerMojo {
         if (targetArchitectures.length == 0) {
             executor.executeAndLogOutput(executionArgs);
         }
+    }
+
+    protected void setUpPlaceholderFileAsMavenArtifact() {
+        mavenArtifactFile.getParentFile().mkdirs();
+        try (PrintWriter writer = new PrintWriter(mavenArtifactFile)) {
+            writer.println("This is NOT the file you are looking for!");
+            writer.println();
+            writer.println("To take advantage of the Maven Reactor, we want to publish pom files for this artifact.");
+            writer.println("But Maven isn't the right solution for managing Docker images.");
+            writer.println();
+            writer.println(String.format("Please check your appropriate Docker repository for the %s files instead!",
+                    project.getArtifactId()));
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Could not create placeholder artifact file!", e);
+        }
+
+        project.getArtifact().setFile(mavenArtifactFile);
     }
 }
