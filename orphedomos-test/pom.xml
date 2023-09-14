@@ -17,6 +17,7 @@
         <module>orphedomos-test-no-buildkit</module>
         <module>orphedomos-test-dependency</module>
         <module>orphedomos-test-multimodule</module>
+        <module>orphedomos-test-skip</module>
     </modules>
 
     <build>
