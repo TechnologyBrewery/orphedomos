@@ -30,6 +30,12 @@ public class DockerBuildMojo extends AbstractDockerMojo {
 
     private static final Logger logger = LoggerFactory.getLogger(DockerBuildMojo.class);
 
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        setUpPlaceholderFileAsMavenArtifact();
+
+        super.execute();
+    }
+
     @Override
     public void doExecute() throws MojoExecutionException, MojoFailureException {
         if (this.repoId != null && !this.repoId.isBlank())
@@ -48,8 +54,6 @@ public class DockerBuildMojo extends AbstractDockerMojo {
 
         if (this.repoId != null && !this.repoId.isBlank())
             logout();
-
-        setUpPlaceholderFileAsMavenArtifact();
     }
 
     private void applyAliases() throws MojoExecutionException {

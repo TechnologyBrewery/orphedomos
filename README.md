@@ -67,6 +67,9 @@ Three artifacts will be processed as part of the `install` and `deploy` phases.
 specification and reactor ordering between `orphedomos`-packaged modules.  This can be configured
 through the [`maven-install-plugin`](https://maven.apache.org/plugins/maven-install-plugin/install-mojo.html) and
 [`maven-deploy-plugin`](https://maven.apache.org/plugins/maven-deploy-plugin/deploy-mojo.html).
+    * WARNING: The `multiplatform-build-deploy` goal _does not_ include any POM publications.  We encourage inclusion of
+  the default lifecycle with `skip` set to `true` so that the POM can be published normally and the environment can be
+  verified.
 
 ### Command Line Utilities
 

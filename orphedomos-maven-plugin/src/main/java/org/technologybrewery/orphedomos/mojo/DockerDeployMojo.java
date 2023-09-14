@@ -43,46 +43,9 @@ public class DockerDeployMojo extends AbstractDockerMojo {
                         "push",
                         alias
                 ));
-//                executor.executeAndLogOutput(Arrays.asList(
-//                        "manifest",
-//                        "create",
-//                        prependRegistry(alias),
-//                        prependRegistry(getImageTag()),
-//                        "--amend"
-//                ));
-//                if (!dryRun) {
-//                    executor.executeAndLogOutput(Arrays.asList(
-//                            "manifest",
-//                            "push",
-//                            prependRegistry(alias),
-//                            "--purge"
-//                    ));
-//                }
             }
         } else {
-            // TODO: Handling for manifest unification
-//            List<String> manifestCmdArgs = new ArrayList<>(Arrays.asList(
-//                    "manifest",
-//                    "create",
-//                    getImageTag()
-//            ));
-//            for (String arch : targetArchitectures) {
-//                executor.executeAndLogOutput(Arrays.asList(
-//                        "push",
-//                        getImageTagWithArch(arch)
-//                ));
-//
-//                manifestCmdArgs.add("--amend");
-//                manifestCmdArgs.add(getImageTagWithArch(arch));
-//            }
-//
-//            executor.executeAndLogOutput(manifestCmdArgs);
-//
-//            executor.executeAndLogOutput(Arrays.asList(
-//                    "manifest",
-//                    "push",
-//                    getImageTag()
-//            ));
+            // TODO: Handling for manifest unification.  Will address as a supplemental goal most likely.
         }
 
         logout();
