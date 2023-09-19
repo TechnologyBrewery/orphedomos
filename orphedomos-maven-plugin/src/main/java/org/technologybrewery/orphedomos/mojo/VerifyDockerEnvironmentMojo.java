@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.technologybrewery.orphedomos.util.OrphedomosException;
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
+import org.technologybrewery.shell.exec.ShellExecutionException;
 
 import java.util.Collections;
 
@@ -30,7 +31,7 @@ public class VerifyDockerEnvironmentMojo extends AbstractDockerMojo {
         try {
             executor.executeAndLogOutput(Collections.singletonList("--version"));
             logger.info("docker command found successfully.");
-        } catch(MojoExecutionException mex) {
+        } catch(ShellExecutionException mex) {
             String msg = "docker command was not found!  Please verify that the docker executable is installed and " +
                     "available on your PATH";
             logger.error(msg);
