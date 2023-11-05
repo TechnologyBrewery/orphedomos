@@ -6,8 +6,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.settings.Settings;
+import org.technologybrewery.commons.credentials.maven.MavenCredentialUtil;
 import org.technologybrewery.orphedomos.util.OrphedomosException;
-import org.technologybrewery.orphedomos.util.credential.CredentialUtil;
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
 
 import java.io.File;
@@ -122,7 +122,7 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
 
     protected void login() throws MojoExecutionException {
         if (dryRun) { return; }
-        String username = CredentialUtil.findUsernameForServer(settings, repoId);
+        String username = MavenCredentialUtil.findUsernameForServer(settings, repoId);
         String password = findPasswordForServer(repoId);
 
         validateLoginDefined(username, password);
@@ -153,9 +153,9 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
         if (dryRun) { return ""; }
         String password;
         if (usePlainTextPassword) {
-            password = CredentialUtil.findPlaintextPasswordForServer(settings, serverId);
+            password = MavenCredentialUtil.findPlaintextPasswordForServer(settings, serverId);
         } else {
-            password = CredentialUtil.decryptServerPassword(settings, serverId);
+            password = MavenCredentialUtil.decryptServerPassword(settings, serverId);
         }
         return password;
     }
