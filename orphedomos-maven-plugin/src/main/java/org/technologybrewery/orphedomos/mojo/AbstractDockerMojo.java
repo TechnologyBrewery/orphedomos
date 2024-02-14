@@ -1,22 +1,35 @@
 package org.technologybrewery.orphedomos.mojo;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 import org.apache.maven.settings.Settings;
 import org.technologybrewery.orphedomos.util.OrphedomosException;
 import org.technologybrewery.orphedomos.util.credential.CredentialUtil;
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
+import org.technologybrewery.orphedomos.util.model.DockerDeployInfo;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
 
 public abstract class AbstractDockerMojo extends AbstractMojo {
+
+    private static String DOCKER_IMAGE_NAME = "dockerImageName";
+    private static String ORPHEDOMOS_PACKAGING = "orphedomos";
+    private static String TAG_SUFFIX = "orphedomos.image.tagsuffix";
+
+    @Parameter(required = true, readonly = true, defaultValue = "${session}")
+    MavenSession mavenSession;
+
     @Parameter(defaultValue="${project.basedir}", property = "orphedomos.docker.context")
     protected File dockerContext;
 
@@ -69,6 +82,14 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
     private String tagSuffix;
 
     protected String getImageTag() {
+        return getImageTag(imageName, imageVersion, tagSuffix);
+    }
+
+    protected static String getImageTag(String imageName, String imageVersion) {
+        return getImageTag(imageName, imageVersion, null);
+    }
+
+    protected static String getImageTag(String imageName, String imageVersion, String tagSuffix) {
         return imageName + ":" + imageVersion + (tagSuffix == null ? "" : tagSuffix);
     }
 
@@ -145,7 +166,7 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
         ));
     }
 
-    protected String prependRegistry(String suffix) {
+    protected static String prependRegistry(String repoUrl, String suffix) {
         return repoUrl + (repoUrl.endsWith("/") ? "" : "/") + suffix;
     }
 
@@ -159,4 +180,23 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
         }
         return password;
     }
+
+    protected static Optional<DockerDeployInfo> getDockerDeployInfo(MavenProject project, String repoUrl) {
+        String packaging = project.getPackaging();
+        if(!packaging.equalsIgnoreCase(ORPHEDOMOS_PACKAGING)) {
+            return Optional.empty();
+        }
+        Properties properties = project.getProperties();
+        String dockerImageName = properties.getProperty(DOCKER_IMAGE_NAME);
+        String imageTag;
+        if(dockerImageName != null) {
+            imageTag = getImageTag(dockerImageName, project.getVersion());
+        }
+        else {
+            imageTag = getImageTag(project.getArtifactId(), project.getVersion(), properties.getProperty(TAG_SUFFIX));
+        }
+        String deployImageTag = prependRegistry(repoUrl, imageTag);
+        return Optional.of(new DockerDeployInfo(imageTag, deployImageTag));
+    }
+
 }

@@ -1,6 +1,7 @@
 package org.technologybrewery.orphedomos.mojo;
 
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
+import org.technologybrewery.orphedomos.util.exec.DockerDeployExecutor;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -17,33 +18,16 @@ public class DockerDeployMojo extends AbstractDockerMojo {
     @Override
     public void doExecute() throws MojoExecutionException, MojoFailureException {
         login();
-
-        DockerCommandExecutor executor = new DockerCommandExecutor(dockerContext);
         // TODO: Yucky logic
         if (this.targetArchitectures.length == 0) {
-            String newName = prependRegistry(getImageTag());
-            executor.executeAndLogOutput(Arrays.asList(
-                    "tag",
-                    getImageTag(),
-                    newName
-            ));
-            if (!dryRun) {
-                executor.executeAndLogOutput(Arrays.asList(
-                        "push",
-                        newName
-                ));
-            }
-            for (String alias : aliases) {
-                executor.executeAndLogOutput(Arrays.asList(
-                        "tag",
-                        getImageTag(),
-                        alias
-                ));
-                executor.executeAndLogOutput(Arrays.asList(
-                        "push",
-                        alias
-                ));
-            }
+            getDockerDeployInfo(mavenSession.getCurrentProject(), repoUrl).ifPresent((dockerDeployInfo) -> {
+                DockerDeployExecutor deployExecutor = new DockerDeployExecutor(dockerContext);
+                try {
+                    deployExecutor.deploy(dockerDeployInfo, aliases, dryRun);
+                } catch(Exception e) {
+                    logger.warn(e.getMessage());
+                }
+            });
         } else {
             // TODO: Handling for manifest unification.  Will address as a supplemental goal most likely.
         }
