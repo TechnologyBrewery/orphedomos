@@ -16,6 +16,9 @@ public class DockerDeployMojo extends AbstractDockerMojo {
 
     @Override
     public void doExecute() throws MojoExecutionException, MojoFailureException {
+        if (!this.isOrphedomosModule()) {
+            return;
+        }
         login();
 
         DockerCommandExecutor executor = new DockerCommandExecutor(dockerContext);
