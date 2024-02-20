@@ -34,7 +34,11 @@ public class DockerBuildMultiPlatformMojo extends AbstractDockerMojo {
             executionArgs.add(String.join(",", targetArchitectures));
         }
 
-        executionArgs.addAll(getArgumentsList());
+        executionArgs.addAll(getBuildArgumentsList());
+
+        if (buildOptions.size() > 0) {
+            executionArgs.addAll(buildOptions);
+        }
 
         executionArgs.add(dockerContext.getAbsolutePath());
 
