@@ -20,6 +20,14 @@
         <configuration>
           <imageName>orphedomos/orphetest</imageName>
           <useBuildKit>false</useBuildKit>
+          <buildOptions>
+            <buildOption>--rm</buildOption>
+            <buildOption>--label</buildOption>
+            <buildOption>test-label=test-value</buildOption>
+            <buildOption>--progress</buildOption>
+            <buildOption>auto</buildOption>
+            <buildOption>--output=type=docker</buildOption>
+          </buildOptions>
         </configuration>
       </plugin>
     </plugins>

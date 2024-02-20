@@ -41,7 +41,7 @@ public class DockerBuildMojo extends AbstractDockerMojo {
         if (this.repoId != null && !this.repoId.isBlank())
             login();
 
-        logger.info("Built docker image...");
+        logger.info("Building docker image...");
         logger.info("Current directory: " + dockerContext);
 
         if (useBuildKit) {
@@ -80,7 +80,11 @@ public class DockerBuildMojo extends AbstractDockerMojo {
                 getDockerfilePath()
         ));
 
-        executionArgs.addAll(this.getArgumentsList());
+        executionArgs.addAll(this.getBuildArgumentsList());
+
+        if (buildOptions.size() > 0) {
+            executionArgs.addAll(buildOptions);
+        }
 
         executionArgs.add(dockerContext.getAbsolutePath());
 
@@ -97,7 +101,11 @@ public class DockerBuildMojo extends AbstractDockerMojo {
                 "--file",
                 getDockerfilePath()
         ));
-        executionArgs.addAll(this.getArgumentsList());
+        executionArgs.addAll(this.getBuildArgumentsList());
+
+        if (buildOptions.size() > 0) {
+            executionArgs.addAll(buildOptions);
+        }
 
         executionArgs.add(dockerContext.getAbsolutePath());
 

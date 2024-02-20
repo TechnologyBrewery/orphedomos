@@ -229,6 +229,32 @@ Specifies target architectures when using the multiplatform build CLI goal.
 
 *Default:* None
 
+#### Docker Build Options
+
+*Description:* Specifies additional [options](https://docs.docker.com/engine/reference/commandline/image_build/#options) to be passed to the docker CLI executor during the build process. Build options should not contain any whitespace. If whitespace is required, the option should be split into separate `<buildOption>` parameters.
+
+*CLI Option:* `orphedomos.build.options`
+
+*POM Option:* `<buildOptions><buildOption> </buildOption></buildOptions>`
+
+*Example:*
+
+```xml
+<configuration>
+    <buildOptions>
+        <buildOption>--no-cache</buildOption>
+        <buildOption>--label</buildOption>
+        <buildOption>test-label=test-value</buildOption>
+        <buildOption>--progress</buildOption>
+        <buildOption>auto</buildOption>
+        <buildOption>--output=type=docker</buildOption>
+    </buildOptions>
+</configuration>
+```
+
+*Default:* []
+
+
 #### Tag Suffix
 *Description:* Appends a suffix to the end of the tag specification.  Useful for specifying a target architecture or dev
 snapshot.  The resulting image name and tag will be of the form `{imageName}:{imageVersion}{tagSuffix}`.

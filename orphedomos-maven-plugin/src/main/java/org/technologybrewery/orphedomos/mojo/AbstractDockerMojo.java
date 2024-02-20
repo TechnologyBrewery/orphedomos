@@ -59,6 +59,9 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
     @Parameter(property = "orphedomos.build.args")
     protected Map<String, String> buildArgs;
 
+    @Parameter(property = "orphedomos.build.options")
+    protected List<String> buildOptions;
+
     /**
      * Skips all plugin goals, effectively turning them into a no-op
      */
@@ -103,7 +106,10 @@ public abstract class AbstractDockerMojo extends AbstractMojo {
      */
     abstract protected void doExecute() throws MojoExecutionException, MojoFailureException;
     
-    protected List<String> getArgumentsList() {
+    /**
+     * Returns a list of all build-time variables with '--build-arg' prepended to each
+     */
+    protected List<String> getBuildArgumentsList() {
         List<String> args = new ArrayList<>();
 
         for (Map.Entry<String, String> kv : buildArgs.entrySet()) {

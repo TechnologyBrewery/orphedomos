@@ -22,6 +22,14 @@
                     <buildArgs>
                         <source>node:12-alpine</source>
                     </buildArgs>
+                    <buildOptions>
+                        <buildOption>--rm</buildOption>
+                        <buildOption>--label</buildOption>
+                        <buildOption>test-label=test-value</buildOption>
+                        <buildOption>--progress</buildOption>
+                        <buildOption>auto</buildOption>
+                        <buildOption>--output=type=docker</buildOption>
+                    </buildOptions>
                 </configuration>
             </plugin>
         </plugins>
