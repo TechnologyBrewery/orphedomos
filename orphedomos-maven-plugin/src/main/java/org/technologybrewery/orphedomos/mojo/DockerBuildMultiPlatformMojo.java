@@ -1,6 +1,7 @@
 package org.technologybrewery.orphedomos.mojo;
 
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
+import org.technologybrewery.orphedomos.util.exec.DockerCredentialExecutor;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -16,9 +17,9 @@ public class DockerBuildMultiPlatformMojo extends AbstractDockerMojo {
         if (!this.isOrphedomosModule()) {
             return;
         }
-
+        DockerCredentialExecutor credentials = new DockerCredentialExecutor(settings, repoId, repoUrl, dockerContext, usePlainTextPassword, dryRun);
+        credentials.login();
         DockerCommandExecutor executor = new DockerCommandExecutor(dockerContext);
-        login();
         List<String> executionArgs = new ArrayList<>(Arrays.asList(
                 "buildx",
                 "build",
@@ -44,6 +45,6 @@ public class DockerBuildMultiPlatformMojo extends AbstractDockerMojo {
 
         executor.executeAndLogOutput(executionArgs);
 
-        logout();
+        credentials.logout();
     }
 }
