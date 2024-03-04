@@ -9,6 +9,7 @@ import org.apache.maven.project.MavenProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
+import org.technologybrewery.orphedomos.util.exec.DockerCredentialExecutor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,8 +39,9 @@ public class DockerBuildMojo extends AbstractDockerMojo {
 
     @Override
     public void doExecute() throws MojoExecutionException, MojoFailureException {
+        DockerCredentialExecutor credentials = new DockerCredentialExecutor(settings, repoId, repoUrl, dockerContext, usePlainTextPassword, dryRun);
         if (this.repoId != null && !this.repoId.isBlank())
-            login();
+            credentials.login();
 
         logger.info("Building docker image...");
         logger.info("Current directory: " + dockerContext);
@@ -53,7 +55,7 @@ public class DockerBuildMojo extends AbstractDockerMojo {
         applyAliases();
 
         if (this.repoId != null && !this.repoId.isBlank())
-            logout();
+            credentials.logout();
     }
 
     private void applyAliases() throws MojoExecutionException {

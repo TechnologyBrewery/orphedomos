@@ -1,6 +1,7 @@
 package org.technologybrewery.orphedomos.mojo;
 
 import org.technologybrewery.orphedomos.util.exec.DockerCommandExecutor;
+import org.technologybrewery.orphedomos.util.exec.DockerCredentialExecutor;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -19,7 +20,8 @@ public class DockerDeployMojo extends AbstractDockerMojo {
         if (!this.isOrphedomosModule()) {
             return;
         }
-        login();
+        DockerCredentialExecutor credentials = new DockerCredentialExecutor(settings, repoId, repoUrl, dockerContext, usePlainTextPassword, dryRun);
+        credentials.login();
 
         DockerCommandExecutor executor = new DockerCommandExecutor(dockerContext);
         // TODO: Yucky logic
@@ -51,6 +53,6 @@ public class DockerDeployMojo extends AbstractDockerMojo {
             // TODO: Handling for manifest unification.  Will address as a supplemental goal most likely.
         }
 
-        logout();
+        credentials.logout();
     }
 }
