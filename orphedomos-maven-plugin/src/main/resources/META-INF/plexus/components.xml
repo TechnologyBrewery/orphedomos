@@ -18,6 +18,7 @@
                         <id>default</id>
                         <phases>
                             <validate>
+                                org.technologybrewery.orphedomos:orphedomos-maven-plugin:retrieve-wheels
                                 org.technologybrewery.orphedomos:orphedomos-maven-plugin:verify-docker-environment
                             </validate>
                             <package>
