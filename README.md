@@ -229,6 +229,38 @@ Specifies target architectures when using the multiplatform build CLI goal.
 
 *Default:* None
 
+#### wheelDependencies ####
+
+Optional set of wheel dependencies to retrieve from poetry cache. This allows previously cached external 
+wheel dependencies to be copied into a given target directory if it exists in poetry cache. This logic 
+depends on wheels to have first been cached by `cacheWheels` habushu-maven-plugin configuration and executes
+during the VALIDATE maven phase. Warnings will be logged if the specified wheel isn't found. 
+```xml
+  <plugin>
+      <groupId>org.technologybrewery.orphedomos</groupId>
+      <artifactId>orphedomos-maven-plugin</artifactId>
+      <version>0.9.0-SNAPSHOT</version>
+      <executions>
+          <execution>
+              <id>retrieve-wheels</id>
+              <phase>validate</phase>
+              <goals>
+                  <goal>retrieve-wheels</goal>
+              </goals>
+              <configuration>
+                  <wheelDependencies>
+                      <wheelDependency>
+                          <artifactId>foundation-core-python</artifactId>
+                          <targetDirectory>${wheelOutputDirectory}</targetDirectory>
+                      </wheelDependency>
+                  </wheelDependencies>
+              </configuration>
+          </execution>
+      </executions>
+  </plugin>
+```
+#### managedDependencies ####
+
 #### Docker Build Options
 
 *Description:* Specifies additional [options](https://docs.docker.com/engine/reference/commandline/image_build/#options) to be passed to the docker CLI executor during the build process. Build options should not contain any whitespace. If whitespace is required, the option should be split into separate `<buildOption>` parameters.
