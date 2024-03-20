@@ -239,7 +239,6 @@ during the VALIDATE maven phase. Warnings will be logged if the specified wheel 
   <plugin>
       <groupId>org.technologybrewery.orphedomos</groupId>
       <artifactId>orphedomos-maven-plugin</artifactId>
-      <version>0.9.0-SNAPSHOT</version>
       <executions>
           <execution>
               <id>retrieve-wheels</id>
