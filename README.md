@@ -249,7 +249,7 @@ during the VALIDATE maven phase. Warnings will be logged if the specified wheel 
               <configuration>
                   <wheelDependencies>
                       <wheelDependency>
-                          <artifactId>foundation-core-python</artifactId>
+                          <artifactId>{artifact-id}</artifactId>
                           <targetDirectory>${wheelOutputDirectory}</targetDirectory>
                       </wheelDependency>
                   </wheelDependencies>
