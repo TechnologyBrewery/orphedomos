@@ -231,34 +231,26 @@ Specifies target architectures when using the multiplatform build CLI goal.
 
 #### wheelDependencies ####
 
-Optional set of wheel dependencies to retrieve from poetry cache. This allows previously cached external 
+*Description:*  Optional set of wheel dependencies to retrieve from poetry cache. This allows previously cached external 
 wheel dependencies to be copied into a given target directory if it exists in poetry cache. This logic 
-depends on wheels to have first been cached by `cacheWheels` habushu-maven-plugin configuration and executes
+depends on wheels to have first been cached by [`cacheWheels`](https://github.com/TechnologyBrewery/habushu?tab=readme-ov-file#install) habushu-maven-plugin configuration and executes
 during the VALIDATE maven phase. Warnings will be logged if the specified wheel isn't found. 
+
+*POM Option:* `<wheelDependencies>`
+
+*Example:*
+
 ```xml
-  <plugin>
-      <groupId>org.technologybrewery.orphedomos</groupId>
-      <artifactId>orphedomos-maven-plugin</artifactId>
-      <executions>
-          <execution>
-              <id>retrieve-wheels</id>
-              <phase>validate</phase>
-              <goals>
-                  <goal>retrieve-wheels</goal>
-              </goals>
-              <configuration>
-                  <wheelDependencies>
-                      <wheelDependency>
-                          <artifactId>{artifact-id}</artifactId>
-                          <targetDirectory>${wheelOutputDirectory}</targetDirectory>
-                      </wheelDependency>
-                  </wheelDependencies>
-              </configuration>
-          </execution>
-      </executions>
-  </plugin>
+<configuration>
+    <wheelDependencies>
+        <wheelDependency>
+            <artifactId>{artifact-id}</artifactId>
+            <targetDirectory>{wheelOutputDirectory}</targetDirectory>
+        </wheelDependency>
+    </wheelDependencies>
+</configuration>
 ```
-Default: []
+*Default:* None
 
 #### Docker Build Options
 
