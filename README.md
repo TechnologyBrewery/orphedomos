@@ -258,7 +258,7 @@ during the VALIDATE maven phase. Warnings will be logged if the specified wheel 
       </executions>
   </plugin>
 ```
-#### managedDependencies ####
+Default: []
 
 #### Docker Build Options
 
