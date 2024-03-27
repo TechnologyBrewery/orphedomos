@@ -37,9 +37,6 @@
 
         <profile>
             <id>bootstrap</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <modules>
                 <module>orphedomos-maven-plugin</module>
             </modules>
@@ -47,6 +44,9 @@
 
         <profile>
             <id>orphedomos-test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <module>orphedomos-test</module>
             </modules>
@@ -55,9 +55,7 @@
         <profile>
             <id>release</id>
             <modules>
-                <!-- Makes it easier to keep versions aligned: -->
                 <module>orphedomos-maven-plugin</module>
-                <module>orphedomos-test</module>
             </modules>
         </profile>
 

@@ -298,7 +298,27 @@ snapshot.  The resulting image name and tag will be of the form `{imageName}:{im
 
 *Default:* `false`
 
+## Building Orphedomos
+
+If you are working on Orphedomos, please be aware of some nuances in working with a plugin that defines a custom Maven 
+build lifecycle and packaging. `orphedomos-test` is used to immediately test the`orphedomos-maven-plugin` and associated 
+`orphedomos` lifecycle. If the `orphedomos-maven-plugin` has not been previously built or there are un-built changes to 
+the `orphedomos` lifecycle, developers must manually build the `orphedomos-maven-plugin` and then execute **another, separate** 
+build of `orphedomos-test` to use the updated `orphedomos-maven-plugin` and `orphedomos` lifecycle. Developers are 
+**not** able to build updates to the `orphedomos` lifecycle and test their application in `orphedomos-test` within the 
+same build. That said, if developers do not update the`orphedomos` lifecycle and simply make updates to existing 
+`Mojo`s defined in the `orphedomos-maven-plugin`, a single build may be used to build `orphedomos-maven-plugin` and 
+apply the updates to `orphedomos-test`. To assist, there are two  profiles available in the build:
+
+* `mvn clean install -Pbootstrap`: Builds the `orphedomos-maven-plugin` such that the custom `orphedomos` lifecycle may 
+* be utilized within subsequent builds.
+* `mvn clean install -Pdefault`: (ACTIVE BY DEFAULT - `-Pdefault` does not need to be specified) builds all modules. 
+* Developers may use this profile to build and apply changes to existing `orphedomos-maven-plugin` `Mojo` classes
+
+
 ## Release Instructions
-Given the nature of releasing a Maven plugin with test modules, there is a two-step release process:
-1. Run `mvn release:clean release:prepare release:perform -U -DreleaseVersion=0.X.X -DdevelopmentVersion=0.Y.0-SNAPSHOT -DscmCommentPrefix=":bookmark: Release version X.X.X"`
-2. Run `mvn release:update-versions -U -DreleaseVersion=0.X.X -DdevelopmentVersion=0.Y.0-SNAPSHOT -DscmCommentPrefix=":bookmark: Release version X.X.X" -Porphedomos-test`
+Given the nature of releasing a Maven plugin with test modules, please use the `release-orphedomos.sh` script in the
+poroject root.  For example:
+```shell
+release-orphedomos.sh <RELEASE VERSION - e.g., 0.11.0> <NEW DEVELOPEMENT VERSION - e.g., 0.12.0-SNAPSHOT>
+```
