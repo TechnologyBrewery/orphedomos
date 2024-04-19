@@ -23,7 +23,7 @@
                 <groupId>org.technologybrewery.orphedomos</groupId>
                 <artifactId>orphedomos-maven-plugin</artifactId>
                 <configuration>
-                    <imageName>orphedomos/${project.artifactId}</imageName>
+                    <imageName>technologybrewery/${project.artifactId}</imageName>
                 </configuration>
             </plugin>
         </plugins>

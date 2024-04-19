@@ -18,7 +18,7 @@
                 <groupId>org.technologybrewery.orphedomos</groupId>
                 <artifactId>orphedomos-maven-plugin</artifactId>
                 <configuration>
-                    <imageName>orphedomos/orphetest</imageName>
+                    <imageName>technologybrewery/orphedomos-test-baseline</imageName>
                     <buildArgs>
                         <source>node:12-alpine</source>
                     </buildArgs>
