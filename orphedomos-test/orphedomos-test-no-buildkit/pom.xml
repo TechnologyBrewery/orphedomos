@@ -18,7 +18,7 @@
         <groupId>org.technologybrewery.orphedomos</groupId>
         <artifactId>orphedomos-maven-plugin</artifactId>
         <configuration>
-          <imageName>orphedomos/orphetest</imageName>
+          <imageName>technologybrewery/orphedomos-test-no-buildkit</imageName>
           <useBuildKit>false</useBuildKit>
           <buildOptions>
             <buildOption>--rm</buildOption>

@@ -33,8 +33,9 @@
                             <id>default-push-docker-image</id>
                             <configuration>
 <!--                            In order to test deployment, you must provide a docker login in your settings.xml.
-                                By default, we assume the name to be "docker-hub".-->
-                                <repoId>docker-hub</repoId>
+                                By default, we assume the name to be "ghcr.io".-->
+                                <repoId>ghcr.io</repoId>
+                                <repoUrl>ghcr.io</repoUrl>
                             </configuration>
                         </execution>
                     </executions>
